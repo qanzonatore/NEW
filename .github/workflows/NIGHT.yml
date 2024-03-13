@@ -24,4 +24,10 @@ jobs:
         run: |
           export UE_ROOT=$HOME/UnrealEngine
           export PATH=$UE_ROOT/Engine/Binaries/Linux:$PATH
-          $UE_ROOT/Engine/Build/BatchFiles/RunUAT.bat BuildCookRun -project=$PWD/DevopsTest.uproject -noP4 -platform=Win64 -clientconfig=Development -build -cook -stage -pak -archive -archivedirectory=<directory_for_artifacts>
+          $UE_ROOT/Engine/Build/BatchFiles/RunUAT.bat BuildCookRun -project=$PWD/DevopsTest.uproject -noP4 -platform=Win64 -clientconfig=Development -build -cook -stage -pak -archive -archivedirectory=artifacts
+
+      - name: Compress and upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: project-artifacts
+          path: ./artifacts
