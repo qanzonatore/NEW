@@ -1,0 +1,28 @@
+name: Compile Editor Libraries
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Unreal Engine
+        run: |
+          sudo apt-get update
+          sudo apt-get install wget
+          wget https://path-to-your-unreal-engine-installer
+          chmod +x unreal-engine-installer
+          ./unreal-engine-installer --install
+
+      - name: Compile Editor Libraries
+        run: |
+          export UE_ROOT=$HOME/UnrealEngine
+          export PATH=$UE_ROOT/Engine/Binaries/Linux:$PATH
+          $UE_ROOT/Engine/Build/BatchFiles/Build.bat LomEditor Win64 Development -project=$PWD/DevopsTest.uproject
