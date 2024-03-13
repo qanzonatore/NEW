@@ -1,0 +1,27 @@
+name: Nightly Package Project
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Запускается каждую полночь UTC
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Unreal Engine
+        run: |
+          sudo apt-get update
+          sudo apt-get install wget
+          wget https://path-to-your-unreal-engine-installer
+          chmod +x unreal-engine-installer
+          ./unreal-engine-installer --install
+
+      - name: Package Project
+        run: |
+          export UE_ROOT=$HOME/UnrealEngine
+          export PATH=$UE_ROOT/Engine/Binaries/Linux:$PATH
+          $UE_ROOT/Engine/Build/BatchFiles/RunUAT.bat BuildCookRun -project=$PWD/DevopsTest.uproject -noP4 -platform=Win64 -clientconfig=Development -build -cook -stage -pak -archive -archivedirectory=<directory_for_artifacts>
