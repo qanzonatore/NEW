@@ -1,33 +1,21 @@
-name: Nightly Package Project
+name: Package Editor Libraries
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Запускается каждую полночь UTC
+    - cron: "0 0 * * *"
 
 jobs:
   package:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up Unreal Engine
+      - name: Set UE_ROOT
         run: |
-          sudo apt-get update
-          sudo apt-get install wget
-          wget https://path-to-your-unreal-engine-installer
-          chmod +x unreal-engine-installer
-          ./unreal-engine-installer --install
+          $env:UE_ROOT = "C:\Program Files\Epic Games\UE_5.3"
 
       - name: Package Project
         run: |
-          export UE_ROOT=$HOME/UnrealEngine
-          export PATH=$UE_ROOT/Engine/Binaries/Linux:$PATH
-          $UE_ROOT/Engine/Build/BatchFiles/RunUAT.bat BuildCookRun -project=$PWD/DevopsTest.uproject -noP4 -platform=Win64 -clientconfig=Development -build -cook -stage -pak -archive -archivedirectory=artifacts
-
-      - name: Compress and upload artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: project-artifacts
-          path: ./artifacts
+          cmd /c "$env:UE_ROOT\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun -project="C:\Users\User\actions-runner\_work\test_devops\test_devops\DevopsTest.uproject" -noP4 -platform=Win64 -clientconfig=Development -build -cook -stage -pak -archive -archivedirectory="C:\temp\ART"
