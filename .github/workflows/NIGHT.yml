@@ -19,3 +19,4 @@ jobs:
       - name: Package Project
         run: |
           cmd /c "$env:UE_ROOT\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun -project="C:\Users\User\actions-runner\_work\test_devops\test_devops\DevopsTest.uproject" -noP4 -platform=Win64 -clientconfig=Development -build -cook -stage -pak -archive -archivedirectory="C:\temp\ART"
+          
