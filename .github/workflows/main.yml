@@ -4,25 +4,19 @@ on:
   push:
     branches:
       - main
-
+      
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up Unreal Engine
+      - name: Set UE_ROOT
         run: |
-          sudo apt-get update
-          sudo apt-get install wget
-          wget https://epicgames-download1.akamaized.net/Builds/UnrealEngineLauncher/Installers/Win32/EpicInstaller-15.17.1.msi?launcherfilename=EpicInstaller-15.17.1.msi
-          chmod +x unreal-engine-installer
-          ./unreal-engine-installer --install
+          $env:UE_ROOT = "C:\Program Files\Epic Games\UE_5.3"
 
       - name: Compile Editor Libraries
         run: |
-          export UE_ROOT=$HOME/UnrealEngine
-          export PATH=$UE_ROOT/Engine/Binaries/Linux:$PATH
-          $UE_ROOT/Engine/Build/BatchFiles/Build.bat LomEditor Win64 Development -project=$PWD/DevopsTest.uproject
+          cmd /c "$env:UE_ROOT\Engine\Build\BatchFiles\Build.bat" DevopsTest Win64 Development -project="C:\Users\User\actions-runner\_work\test_devops\test_devops\DevopsTest.uproject"
