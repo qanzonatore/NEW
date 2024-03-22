@@ -15,7 +15,7 @@ jobs:
 
       - name: Set UE_ROOT
         run: |
-          cmd /c "$env:UE_ROOT = "C:\Program Files\Epic Games\UE_5.3""
+          cmd /c $env:UE_ROOT = "C:\Program Files\Epic Games\UE_5.3"
 
       - name: Compile Editor Libraries
         run: |
