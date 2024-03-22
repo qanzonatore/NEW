@@ -13,10 +13,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install Git LFS
-        run: |
-          git lfs install
-
       - name: Set UE_ROOT
         run: |
           $env:UE_ROOT = "C:\Program Files\Epic Games\UE_5.3"
