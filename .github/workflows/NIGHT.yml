@@ -1,9 +1,8 @@
-name: Package Editor Libraries
+name: Nightly Package Editor Libraries
 
 on:
-  push:
-    branches:
-      - main
+  schedule:
+    - cron: "0 0 * * *"
 
 jobs:
   package:
