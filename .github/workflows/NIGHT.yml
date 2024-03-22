@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - main
-#on:
-#  schedule:
-#    - cron: "0 0 * * *"
 
 jobs:
   package:
@@ -16,6 +13,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Install Git LFS
+        run: |
+          git lfs install
+
       - name: Set UE_ROOT
         run: |
           $env:UE_ROOT = "C:\Program Files\Epic Games\UE_5.3"
@@ -23,4 +24,3 @@ jobs:
       - name: Package Project
         run: |
           cmd /c "$env:UE_ROOT\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun -project="C:\Users\User\actions-runner\_work\test_devops\test_devops\DevopsTest.uproject" -noP4 -platform=Win64 -clientconfig=Development -build -cook -stage -pak -archive -archivedirectory="C:\temp\ART"
-          
