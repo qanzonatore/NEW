@@ -13,6 +13,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Install Git LFS
+        run: |
+          git lfs install
+
+      - name: Track LFS files
+        run: |
+          git lfs track "*.uasset"
+          git add .gitattributes
+          git commit -m "Track LFS files"
+          git push origin main
+
+      - name: Pull LFS files
+        run: |
+          git lfs pull
+
       - name: Set UE_ROOT
         run: |
           $env:UE_ROOT = "C:\Program Files\Epic Games\UE_5.3"
